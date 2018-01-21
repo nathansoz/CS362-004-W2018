@@ -1,12 +1,15 @@
 CFLAGS = -Wall -fpic -coverage -lm
 
-CARDS = smithy.o
+CARDS = smithy.o adventurer.o
 
 rngs.o: rngs.h rngs.c
 	gcc -c rngs.c -g  $(CFLAGS)
 
-$(CARDS): cards/smithy.c
+smithy.o: cards/smithy.c
 	gcc -c cards/smithy.c -g  $(CFLAGS)
+
+adventurer.o: cards/adventurer.c
+	gcc -c cards/adventurer.c -g  $(CFLAGS)
 
 cards: $(CARDS)
 

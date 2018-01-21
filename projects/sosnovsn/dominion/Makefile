@@ -1,6 +1,6 @@
 CFLAGS = -Wall -fpic -coverage -lm
 
-CARDS = smithy.o adventurer.o
+CARDS = smithy.o adventurer.o council_room.o
 
 rngs.o: rngs.h rngs.c
 	gcc -c rngs.c -g  $(CFLAGS)
@@ -10,6 +10,9 @@ smithy.o: cards/smithy.c
 
 adventurer.o: cards/adventurer.c
 	gcc -c cards/adventurer.c -g  $(CFLAGS)
+
+council_room.o: cards/council_room.c
+	gcc -c cards/council_room.c -g  $(CFLAGS)
 
 cards: $(CARDS)
 

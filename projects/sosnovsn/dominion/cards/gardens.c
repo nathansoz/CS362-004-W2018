@@ -2,5 +2,5 @@
 
 int apply_gardens()
 {
-    return -1;
+    return 0;
 }

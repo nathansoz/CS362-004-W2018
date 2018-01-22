@@ -724,7 +724,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 			
     case gardens:
-      return -1;
+      return apply_gardens();
 			
     case mine:
       j = state->hand[currentPlayer][choice1];  //store card we will trash
@@ -791,16 +791,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return apply_smithy(currentPlayer, state, handPos);
 		
     case village:
-      //+1 Card
-      drawCard(currentPlayer, state);
-			
-      //+2 Actions
-      state->numActions = state->numActions + 2;
-			
-      //discard played card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
-		
+      return apply_village(currentPlayer, state, handPos);
     case baron:
       state->numBuys++;//Increase buys by 1!
       if (choice1 > 0){//Boolean true or going to discard an estate

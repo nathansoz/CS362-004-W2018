@@ -1,4 +1,4 @@
-# Created by https://www.gitignore.io/api/c,c++
+# Created by https://www.gitignore.io/api/c,c++,visualstudiocode
 
 ### C ###
 # Prerequisites
@@ -73,5 +73,14 @@ dkms.conf
 
 # Executables
 
+### VisualStudioCode ###
+.vscode/*
+.vs/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
 
-# End of https://www.gitignore.io/api/c,c++
+
+# End of https://www.gitignore.io/api/c,c++,visualstudiocode

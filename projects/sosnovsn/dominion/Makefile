@@ -37,6 +37,12 @@ badTestDrawCard: badTestDrawCard.c dominion.o rngs.o cards
 testBuyCard: testDrawCard.c dominion.o rngs.o cards
 	gcc -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CARDS) $(CFLAGS)
 
+unittest1: unittest1.c dominion.o rngs.o cards
+	gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CARDS) $(CFLAGS)
+
+unittest2: unittest2.c dominion.o rngs.o cards
+	gcc -o unittest2 -g  unittest2.c dominion.o rngs.o $(CARDS) $(CFLAGS)
+
 testAll: dominion.o testSuite.c cards
 	gcc -o testSuite testSuite.c -g  dominion.o rngs.o $(CARDS) $(CFLAGS)
 
@@ -48,6 +54,11 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+rununittests: unittest1 unittest2
+	./unittest1 > unittestresult.out
+	./unittest2 >> unittestresult.out
+	gcov dominion.c >> unittestresult.out
+
 
 player: player.c interface.o cards
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CARDS) $(CFLAGS)
@@ -55,4 +66,4 @@ player: player.c interface.o cards
 all: playdom player testDrawCard testBuyCard badTestDrawCard
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard badTestDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard badTestDrawCard testDrawCard.exe unittest1 unittest2

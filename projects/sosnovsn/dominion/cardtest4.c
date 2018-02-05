@@ -34,7 +34,7 @@ int main() {
 
     int numActions = G.numActions;
     int numCards = G.handCount[0];
-    printf ("TESTING CARD gardens:\n");
+    printf ("TESTING CARD village:\n");
     cardEffect(village, 0, 0, 0, &G, 7, &bonus);
     int newNumActions = G.numActions;
     int newNumCards = G.handCount[0];

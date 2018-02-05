@@ -74,7 +74,8 @@ int main() {
     printf ("TESTING isGameOver() with various supply piles set to 0:\n");
     
     int numPilesSet = 0;
-    for(int i = 10; i < 20; i++)
+    int i;
+    for(i = 10; i < 20; i++)
     {
         returned = isGameOver(&G);
         int expected = numPilesSet < 3 ? 0 : 1;

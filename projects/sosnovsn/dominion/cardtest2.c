@@ -47,7 +47,8 @@ int main() {
         failed++;
     }
 
-    for(int j = newNumCards - 2; j < newNumCards; j++)
+    int j;
+    for(j = newNumCards - 2; j < newNumCards; j++)
     {
         if(G.hand[0][j] == gold || G.hand[0][j] == silver || G.hand[0][j] == copper)
         {

@@ -52,4 +52,6 @@ int main()
   {
     printf("Return Error Count: %i\n", returnErrorCount);
   }
+
+  return 0;
 }

@@ -114,4 +114,6 @@ int main()
   {
     printf("Total card failures: %i, Treasure card failures: %i, Hand count failures: %i\n", totalCountErrors, treasureCardErrors, handCountErrors);
   }
+
+  return 0;
 }

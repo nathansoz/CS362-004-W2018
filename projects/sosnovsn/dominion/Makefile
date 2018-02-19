@@ -95,6 +95,16 @@ rununittests: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardte
 	./cardtest4 >> unittestresult.out
 	gcov dominion.c >> unittestresult.out
 
+runrandomtests: randomtestadventurer randomtestcard1 randomtestcard2
+	./randomtestadventurer > randomtestadventurer.out
+	gcov adventurer.c >> randomtestadventurer.out
+	cat adventurer.c.gcov >> randomtestadventurer.out
+	./randomtestcard1 > randomtestcard1.out
+	gcov village.c >> randomtestcard1.out
+	cat village.c.gcov >> randomtestcard1.out
+	./randomtestcard2 > randomtestcard2.out
+	gcov gardens.c >> randomtestcard2.out
+	cat gardens.c.gcov >> randomtestcard2.out
 
 player: player.c interface.o cards
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CARDS) $(CFLAGS)

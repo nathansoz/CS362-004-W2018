@@ -71,3 +71,74 @@ Contact information: myemail@oregonstate.edu
 THIS IS THE END OF BUG 1
 --------------------------------------------------------------------------------------------------------
 
+
+
+--------------------------------------------------------------------------------------------------------
+THIS IS THE START OF BUG 2
+--------------------------------------------------------------------------------------------------------
+
+id: 2
+Title: Smithy function only draws 2 cards, resulting in a net hand change of +1
+Classification: Serious Bug - Card does not conform to official rules
+Platform: Ubuntu 16.04
+Repos: Every Time
+Description:
+
+The smithy card always increases number of cards in player hand by 1 (two cards drawn, one discarded).
+
+You can trigger this by calling cardEffect for smithy.
+
+I would expect my net number of cards to increase by 2.
+
+
+Steps-To-Reproduce:
+
+Consider the following code, compiled with: gcc -o test -g  test.c dominion.o rngs.o -Wall -fpic -coverage -lm
+
+#include "dominion.h"
+#include "dominion_helpers.h"
+#include <string.h>
+#include <stdio.h>
+#include <assert.h>
+#include "rngs.h"
+
+int main() {
+    int p;
+    int c;
+    int bonus;
+    int failed = 0;
+    int numPlayer = 4;
+    int maxCards = 5;
+    int seed = 1000;
+    int k[10] = {adventurer, council_room, feast, gardens, mine
+            , remodel, smithy, village, baron, great_hall};
+
+    struct gameState G;
+    memset(&G, 23, sizeof(struct gameState));   // clear the game state
+    int r = initializeGame(numPlayer, k, seed, &G);
+
+    int numCards = G.handCount[0];
+    printf ("TESTING CARD smithy:\n");
+    cardEffect(smithy, 0, 0, 0, &G, 6, &bonus);
+
+    int newNumCards = G.handCount[0];
+    if(newNumCards == numCards + 2)
+    {
+        printf("PASSED: Smithy grew current player's hand by %i; Expected %i\n", newNumCards - numCards, 2);
+        return 0;
+    }
+    else
+    {
+        printf("FAILED: Smithy changed current player's hand by %i; Expected %i\n", newNumCards - numCards, 2);
+        return 1;
+    }
+}
+
+
+Workaround: NONE
+
+Contact information: myemail@oregonstate.edu
+
+--------------------------------------------------------------------------------------------------------
+THIS IS THE END OF BUG 2
+--------------------------------------------------------------------------------------------------------

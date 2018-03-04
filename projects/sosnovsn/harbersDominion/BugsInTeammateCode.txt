@@ -1,0 +1,73 @@
+--------------------------------------------------------------------------------------------------------
+THIS IS THE START OF BUG 1
+--------------------------------------------------------------------------------------------------------
+
+id: 1
+Title: Village function reduces the number of actions player can take by 1. It should increase by 2
+Classification: Serious Bug - Card does not conform to official rules
+Platform: Ubuntu 16.04
+Repos: Every Time
+Description:
+
+The village card always DECREASES the number of actions the player can take instead of increasing it by 2.
+
+You can trigger this by calling cardEffect for village.
+
+I would expect my actions to increase by 2.
+
+
+Steps-To-Reproduce:
+
+Consider the following code, compiled with: gcc -o test -g  test.c dominion.o rngs.o -Wall -fpic -coverage -lm 
+
+#include "dominion.h"
+#include "dominion_helpers.h"
+#include <string.h>
+#include <stdio.h>
+#include <assert.h>
+#include "rngs.h"
+
+int repro()
+{
+    int p;
+    int c;
+    int bonus;
+    int failed = 0;
+    int numPlayer = 4;
+    int maxCards = 5;
+    int seed = 1000;
+    int k[10] = {adventurer, council_room, feast, gardens, mine
+            , remodel, smithy, village, baron, great_hall};
+
+    struct gameState G;
+    memset(&G, 23, sizeof(struct gameState));   // clear the game state
+    int r = initializeGame(numPlayer, k, seed, &G);
+
+    int numActions = G.numActions;
+    int numCards = G.handCount[0];
+    printf ("TESTING CARD village:\n");
+    cardEffect(village, 0, 0, 0, &G, 7, &bonus);
+    int newNumActions = G.numActions;
+    int newNumCards = G.handCount[0];
+
+    if(newNumActions == numActions + 2)
+    {
+        printf("PASSED: Number of actions is %i; Expected %i\n", newNumActions, numActions + 2);
+        return 0;
+    }
+    else
+    {
+        printf("FAILED: Number of actions is %i; Expected %i\n", newNumActions, numActions + 2);
+        return 1;
+    }
+}
+
+Workaround: NONE
+
+Contact information: myemail@oregonstate.edu
+
+
+--------------------------------------------------------------------------------------------------------
+THIS IS THE END OF BUG 1
+--------------------------------------------------------------------------------------------------------
+

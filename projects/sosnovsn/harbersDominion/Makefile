@@ -69,7 +69,7 @@ randomtestcard1: randomtestcard1.c dominion.o rngs.o rtu
 randomtestcard2: randomtestcard2.c dominion.o rngs.o rtu
 	gcc -o randomtestcard2 -g randomtestcard2.c dominion.o rngs.o randomTestingUtilities.o $(CFLAGS)
 
-rununittests: cardtest1 cardtest2 cardtest3 cardtest4 unittest1 unittest2 unittest3 unittest4
+rununittests: cardtest1 cardtest2 cardtest3 cardtest4 unittest1 unittest2 unittest3 unittest4 randomtestadventurer randomtestcard1 randomtestcard2
 	./unittest1 > unittestresult.out
 	./unittest2 >> unittestresult.out
 	./unittest3 >> unittestresult.out
@@ -78,7 +78,11 @@ rununittests: cardtest1 cardtest2 cardtest3 cardtest4 unittest1 unittest2 unitte
 	./cardtest2 >> unittestresult.out
 	./cardtest3 >> unittestresult.out
 	./cardtest4 >> unittestresult.out
-	gcov dominion.c >> unittestresult.out
+	./randomtestadventurer > randomtestadventurer.out
+	./randomtestcard1 > randomtestcard1.out
+	./randomtestcard2 > randomtestcard2.out
+	gcov dominion.c > coverage.out
+	cat dominion.c.gcov >> coverage.out
 
 runrandomtests: randomtestadventurer randomtestcard1 randomtestcard2
 	./randomtestadventurer > randomtestadventurer.out

@@ -19,15 +19,8 @@ public class UrlValidatorTest extends TestCase {
       super(testName);
    }
 
-   
-   
-   public void testManualTest()
-   {
-      //You can use this function to implement your manual testing
-	   
-   }
-   
-   
+
+   // NOTE TO TEAM: Don't forget to do these
    public void testYourFirstPartition()
    {
 	 //You can use this function to implement your First Partition testing
@@ -38,21 +31,15 @@ public class UrlValidatorTest extends TestCase {
 		 //You can use this function to implement your Second Partition testing	   
 
    }
-   //You need to create more test cases for your Partitions if you need to 
-   
-   public void testIsValid()
-   {
-	   //You can use this function for programming based testing
-
-   }
 
    /*
-        This is the programmatic testing section. I tend to prefer having several small unit tests that validate
+        The below is a combination of unit and manual testing. I tend to prefer having several small unit tests that validate
         basic functionality of things that I know should work. This allows for much easier development vs. a monolithic
         test function because if you break something you can quickly isolate the problem due to the test name
 
         I then implement a larger test function that tests all possible inputs as something to catch edge cases
     */
+
 
    public void testBasicValidUrl()
    {
@@ -124,6 +111,95 @@ public class UrlValidatorTest extends TestCase {
         UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         assertTrue(validator.isValid("http://nathan:testpass@testurl.com"));
     }
+
+
+    public void testInvalidUrlNoSlashes()
+    {
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(!validator.isValid("http:testurl.com"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+    }
+
+    public void testInvalidUrlTooManySlashes()
+    {
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(!validator.isValid("http:////testurl.com"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+    }
+
+    public void testInvalidUrlAlphaPortNum()
+    {
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(!validator.isValid("http://testurl.com:test"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+    }
+
+    public void testInvalidUrlNumericScheme()
+    {
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(!validator.isValid("3ttp://testurl.com"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+    }
+
+
+    public void testInvalidUrlSpacesInPath()
+    {
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(!validator.isValid("http://testurl.com/this has some spaces"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+    }
+
+
+    public void testInvalidUrlBadIPAddr()
+    {
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(!validator.isValid("ftp://1258.46.884.894"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+    }
+
+
 
     /*
         This is the large automated test we created.

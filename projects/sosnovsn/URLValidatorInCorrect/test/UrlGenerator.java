@@ -15,14 +15,20 @@ public class UrlGenerator {
 
     private void initProtocols()
     {
-        urlGeneration = new ArrayList<ArrayList<Tuple<String, Boolean>>>();
+        
         ArrayList<Tuple<String, Boolean>> protocols = new ArrayList<Tuple<String, Boolean>>();
-        urlGeneration.add(protocols);
 
-        urlGeneration.get(protocol).add(new Tuple<String, Boolean>("", false));
-        urlGeneration.get(protocol).add(new Tuple<String, Boolean>("http://", true));
-        urlGeneration.get(protocol).add(new Tuple<String, Boolean>("https://", true));
-        urlGeneration.get(protocol).add(new Tuple<String, Boolean>("ftp://", true));
+        protocols.add(new Tuple<String, Boolean>("", true));
+        protocols.add(new Tuple<String, Boolean>("http://", true));
+        protocols.add(new Tuple<String, Boolean>("https://", true));
+        protocols.add(new Tuple<String, Boolean>("ftp://", true));
+        protocols.add(new Tuple<String, Boolean>(":/", false));
+        protocols.add(new Tuple<String, Boolean>("3://", false));
+        protocols.add(new Tuple<String, Boolean>("42://", false));
+        protocols.add(new Tuple<String, Boolean>("42abc://", false));
+        protocols.add(new Tuple<String, Boolean>("abc42://", true));
+
+        urlGeneration.add(protocols);
     }
 
     private void initUsernames()
@@ -45,8 +51,49 @@ public class UrlGenerator {
         hosts.add(new Tuple<String, Boolean>("", false));
         hosts.add(new Tuple<String, Boolean>("google.com", true));
         hosts.add(new Tuple<String, Boolean>("images.google.com", true));
+        hosts.add(new Tuple<String, Boolean>("0.0.0.0", true));
+        hosts.add(new Tuple<String, Boolean>("987.34.566.755", false));
+
 
         urlGeneration.add(hosts);
+    }
+
+    private void initPorts()
+    {
+        ArrayList<Tuple<String, Boolean>> ports = new ArrayList<Tuple<String, Boolean>>();
+
+        ports.add(new Tuple<String, Boolean>("", true));
+        ports.add(new Tuple<String, Boolean>(":80", true));
+        ports.add(new Tuple<String, Boolean>(":443", true));
+        ports.add(new Tuple<String, Boolean>(":897", true));
+        ports.add(new Tuple<String, Boolean>(":-2", false));
+        ports.add(new Tuple<String, Boolean>(":a", false));
+
+        urlGeneration.add(ports);
+    }
+
+    private void initStems()
+    {
+        ArrayList<Tuple<String, Boolean>> stems = new ArrayList<Tuple<String, Boolean>>();
+
+        stems.add(new Tuple<String, Boolean>("", true));
+        stems.add(new Tuple<String, Boolean>("@badstem@", false));
+        stems.add(new Tuple<String, Boolean>("/stem", true));
+        stems.add(new Tuple<String, Boolean>("/stem/anotherStem", true));
+        stems.add(new Tuple<String, Boolean>("/stem/anotherStem/", true));
+
+        urlGeneration.add(stems);
+    }
+
+    private void initQueries()
+    {
+        ArrayList<Tuple<String, Boolean>> queries = new ArrayList<Tuple<String, Boolean>>();
+
+        queries.add(new Tuple<String, Boolean>("", true));
+        queries.add(new Tuple<String, Boolean>("?test=true", true));
+        queries.add(new Tuple<String, Boolean>("?test=true&myTest=false", true));
+
+        urlGeneration.add(queries);
     }
 
     private boolean incrementCounter(int position)
@@ -72,10 +119,13 @@ public class UrlGenerator {
         counter = new ArrayList<Integer>();
         urlGeneration = new ArrayList<ArrayList<Tuple<String, Boolean>>>();
         Urls = new LinkedList<Tuple<String, Boolean>>();
-
+        
         initProtocols();
         initUsernames();
         initHosts();
+        initPorts();
+        initStems();
+        initQueries();
 
         BuildUrls();
     }

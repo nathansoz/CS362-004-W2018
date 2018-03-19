@@ -63,13 +63,30 @@ public class UrlValidatorTest extends TestCase {
     public void testBasicValidUrlHttps()
     {
         UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertTrue(validator.isValid("https://testurl.com"));
+
+        try
+        {
+            assertTrue(validator.isValid("https://testurl.com"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
     }
 
     public void testBasicValidUrlUncommonProtocol()
     {
-        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertTrue(validator.isValid("vsts://testurl.com"));
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(validator.isValid("vsts://testurl.com"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
     }
 
    public void testBasicValidUrlWithStem()
@@ -108,8 +125,13 @@ public class UrlValidatorTest extends TestCase {
         assertTrue(validator.isValid("http://nathan:testpass@testurl.com"));
     }
 
+    /*
+        This is the large automated test we created.
+        It uses a URL generator class that we wrote (UrlGenerator.java and Tuple.java) that
+        creates URLs for testing.
+     */
     @Test
-    public void testBlah() throws RuntimeException
+    public void testWithUrlGenerator() throws RuntimeException
     {
         int errors = 0;
         int assertionError = 0;
@@ -144,6 +166,8 @@ public class UrlValidatorTest extends TestCase {
             }
             catch(Error e)
             {
+                System.out.printf("UNHANDLED ERROR thrown from validator ON: %s", url.First);
+                System.out.println();
                 errors++;
             }
 
@@ -157,6 +181,5 @@ public class UrlValidatorTest extends TestCase {
 
         Assert.assertTrue(errors == 0);
         Assert.assertTrue(assertionError == 0);
-
     }
 }

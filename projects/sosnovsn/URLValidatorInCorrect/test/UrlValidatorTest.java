@@ -20,16 +20,25 @@ public class UrlValidatorTest extends TestCase {
    }
 
 
-   // NOTE TO TEAM: Don't forget to do these
    public void testYourFirstPartition()
    {
-	 //You can use this function to implement your First Partition testing
-
+        // First partition to check that all urls that have an invalid character will be invalid.
+        // Invalid Protocol
+       UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+       // Invalid Protocol
+       assertFalse(validator.isValid("42:nathan@google.com:80/stem"));
+       // Invalid Hosts
+       assertFalse(validator.isValid("abc42://987.34.566.75:80/stem/anotherstem?"));
+       //Invalid Port
+       assertFalse(validator.isValid("https://images.google.com:a"));
+       // Invalid Stem
+       assertFalse(validator.isValid("https://images.google.com@badstem@"));
    }
-   
-   public void testYourSecondPartition(){
-		 //You can use this function to implement your Second Partition testing	   
 
+   // Second Partician to test that good urls will work.
+   public void testYourSecondPartition(){
+       UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+       assertTrue(validator.isValid("https:google.com:80/stem"));
    }
 
    /*

@@ -1,6 +1,8 @@
 
 
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
@@ -104,5 +106,57 @@ public class UrlValidatorTest extends TestCase {
     {
         UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         assertTrue(validator.isValid("http://nathan:testpass@testurl.com"));
+    }
+
+    @Test
+    public void testBlah() throws RuntimeException
+    {
+        int errors = 0;
+        int assertionError = 0;
+
+        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        UrlGenerator generator = new UrlGenerator();
+
+        Tuple<String, Boolean> url = generator.Next();
+        while(url != null)
+        {
+
+
+            try
+            {
+                boolean valid = url.Second;
+                boolean validatorReturned = validator.isValid(url.First);
+                Assert.assertEquals(validatorReturned, valid);
+            }
+            catch(AssertionError e)
+            {
+                if(url.Second)
+                {
+                    System.out.printf("ERROR! %s should be valid = true, but was valid = false.", url.First);
+                    System.out.println();
+                }
+                else
+                {
+                    System.out.printf("ERROR! %s should be valid = false, but was valid = true.", url.First);
+                    System.out.println();
+                }
+                assertionError++;
+            }
+            catch(Error e)
+            {
+                errors++;
+            }
+
+            url = generator.Next();
+        }
+
+        System.out.printf("UNHANDLED ERRORS/EXCEPTIONS: %d", errors);
+        System.out.println();
+        System.out.printf("ASSERTION ERRORS: %d", assertionError);
+        System.out.println();
+
+        Assert.assertTrue(errors == 0);
+        Assert.assertTrue(assertionError == 0);
+
     }
 }

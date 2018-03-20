@@ -304,12 +304,23 @@ public void testInvalidPartition()
     }
 
     // This test seeks to replicate a test case for Bug Report "CS362-Validator-Bug-0002 [Invalid URL with bad stem tests as Valid]"
-    public void testInvalidUrlBadStem()
+    public void testInvalidUrlBadStems()
     {
         try
         {
             UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-            assertTrue(!validator.isValid("http://0.0.0.0@badstem@"));
+            assertTrue(!validator.isValid("http://alphabeticdomain.net@badstem@"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(!validator.isValid("http://0.0.0.0{notastem&"));
         }
         catch(Error e)
         {
@@ -317,6 +328,7 @@ public void testInvalidPartition()
             Assert.assertTrue(false);
         }
     }
+
 
 
     /*

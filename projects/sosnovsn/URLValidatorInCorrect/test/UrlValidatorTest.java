@@ -20,25 +20,60 @@ public class UrlValidatorTest extends TestCase {
    }
 
 
-   public void testYourFirstPartition()
-   {
-        // First partition to check that all urls that have an invalid character will be invalid.
-        // Invalid Protocol
+   public void testYourFirstPartition() {
+       // First partition to check that all urls that have an invalid character will be invalid.
        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
        // Invalid Protocol
-       assertFalse(validator.isValid("42:nathan@google.com:80/stem"));
-       // Invalid Hosts
-       assertFalse(validator.isValid("abc42://987.34.566.75:80/stem/anotherstem?"));
-       //Invalid Port
-       assertFalse(validator.isValid("https://images.google.com:a"));
-       // Invalid Stem
-       assertFalse(validator.isValid("https://images.google.com@badstem@"));
+       try{
+           assertTrue(!validator.isValid("42:nathan@google.com:80/stem"));
+       }
+       catch(Error e)
+       {
+           System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+           Assert.assertTrue(false);
+       }
+       try{
+           // Invalid Hosts
+           assertTrue(!validator.isValid("abc42://987.34.566.75:80/stem/anotherstem?"));
+       }
+       catch(Error e)
+       {
+           System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+           Assert.assertTrue(false);
+       }
+       try{
+           //Invalid Port
+           assertTrue(!validator.isValid("https://images.google.com:a"));
+       }
+       catch(Error e)
+       {
+           System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+           Assert.assertTrue(false);
+       }
+       try{
+           // Invalid Stem
+           assertTrue(!validator.isValid("https://images.google.com@badstem@"));
+       }
+       catch(Error e)
+       {
+           System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+           Assert.assertTrue(false);
+       }
    }
+
+
 
    // Second Partician to test that good urls will work.
    public void testYourSecondPartition(){
        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-       assertTrue(validator.isValid("https:google.com:80/stem"));
+       try{
+           assertTrue(validator.isValid("http://google.com:80/stem"));
+       }
+       catch(Error e)
+       {
+           System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+           Assert.assertTrue(false);
+       }
    }
 
    /*

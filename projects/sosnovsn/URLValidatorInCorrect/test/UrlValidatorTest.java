@@ -9,19 +9,16 @@ import org.junit.Test;
 // Again, it is up to you to use this file or not!
 
 
-
-
-
 public class UrlValidatorTest extends TestCase {
-
 
    public UrlValidatorTest(String testName) {
       super(testName);
    }
 
-
-   public void testYourFirstPartition() {
-       // First partition to check that all urls that have an invalid character will be invalid.
+public void testInvalidPartition()
+   {
+        // First partition to check that all urls that have an invalid character will be invalid.
+        // Invalid Protocol
        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
        // Invalid Protocol
        try{
@@ -64,7 +61,7 @@ public class UrlValidatorTest extends TestCase {
 
 
    // Second Partician to test that good urls will work.
-   public void testYourSecondPartition(){
+   public void testValidPartition(){
        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
        try{
            assertTrue(validator.isValid("http://google.com:80/stem"));
@@ -83,7 +80,6 @@ public class UrlValidatorTest extends TestCase {
 
         I then implement a larger test function that tests all possible inputs as something to catch edge cases
     */
-
 
    public void testBasicValidUrl()
    {
@@ -122,39 +118,86 @@ public class UrlValidatorTest extends TestCase {
 
    public void testBasicValidUrlWithStem()
    {
-       UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-       assertTrue(validator.isValid("http://testurl.com/test"));
+       try
+       {
+           UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+           assertTrue(validator.isValid("http://testurl.com/test"));
+       }
+       catch(Error e)
+       {
+           System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+           Assert.assertTrue(false);
+       }
    }
 
     public void testBasicValidUrlWithLongStem()
     {
-        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertTrue(validator.isValid("http://testurl.com/test/me/today"));
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(validator.isValid("http://testurl.com/test/me/today"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
     }
 
     public void testBasicValidUrlWithQueryParameter()
     {
-        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertTrue(validator.isValid("http://testurl.com/test?answerToLife=42"));
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(validator.isValid("http://testurl.com/test?answerToLife=42"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
     }
 
     public void testBasicValidUrlWithFragment()
     {
-        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertTrue(validator.isValid("http://testurl.com/test#thisValidatorShouldWork"));
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(validator.isValid("http://testurl.com/test#thisValidatorShouldWork"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
     }
 
     public void testBasicValidUrlWithUser()
     {
-        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertTrue(validator.isValid("http://nathan@testurl.com"));
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(validator.isValid("http://nathan@testurl.com"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
     }
 
     public void testBasicValidUrlWithUserAndPassword()
     {
-        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-        assertTrue(validator.isValid("http://nathan:testpass@testurl.com"));
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(validator.isValid("http://nathan:testpass@testurl.com"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
             Assert.assertTrue(false);
+        }
     }
 
 
@@ -244,6 +287,36 @@ public class UrlValidatorTest extends TestCase {
         }
     }
 
+    // This test seeks to replicate test cases for Bug Report "CS362-Validator-Bug-0001 [Valid URL with scheme, host, and port tests as Invalid]"
+    public void testValidUrlPortNum()
+    {
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(validator.isValid("http://images.google.com:80"));
+
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+    }
+
+    // This test seeks to replicate a test case for Bug Report "CS362-Validator-Bug-0002 [Invalid URL with bad stem tests as Valid]"
+    public void testInvalidUrlBadStem()
+    {
+        try
+        {
+            UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+            assertTrue(!validator.isValid("http://0.0.0.0@badstem@"));
+        }
+        catch(Error e)
+        {
+            System.out.println("ERROR! Unhandled error thrown from url validator!!!");
+            Assert.assertTrue(false);
+        }
+    }
 
 
     /*

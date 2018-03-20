@@ -154,6 +154,7 @@ public class UrlValidatorTest extends TestCase {
     {
         UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
         assertTrue(validator.isValid("http://nathan:testpass@testurl.com"));
+            Assert.assertTrue(false);
     }
 
 
